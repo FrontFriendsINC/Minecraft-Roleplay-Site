@@ -1,4 +1,4 @@
-# 🏠 BlockMarket - Minecraft House Marketplace
+#  BlockMarket - Minecraft House Marketplace
 
 A modern, beautiful marketplace for buying and selling stunning Minecraft houses! Built with Python Flask backend and an elegant HTML/CSS frontend with a Minecraft-inspired dark theme.
 
