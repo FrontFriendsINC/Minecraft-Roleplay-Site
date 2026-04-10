@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - BlockMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">█ BlockMarket</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Marketplace</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-card">
+                <h1 class="login-title">Admin Panel</h1>
+                <p class="login-subtitle">Enter your password to access the admin panel</p>
+
+                {% if error %}
+                <div class="error-message">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST" class="login-form">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter admin password" required autofocus>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+
+                <p class="login-footer"><a href="/">← Back to Marketplace</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 BlockMarket - A Minecraft House Marketplace</p>
+        </div>
+    </footer>
+
+    <style>
+        .login-section {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .login-container {
+            width: 100%;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(50, 50, 50, 0.95);
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #ff9800;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-form {
+            margin-bottom: 20px;
+        }
+
+        .login-footer {
+            text-align: center;
+        }
+
+        .login-footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-footer a:hover {
+            color: #5cbf60;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+    </style>
+</body>
+</html>

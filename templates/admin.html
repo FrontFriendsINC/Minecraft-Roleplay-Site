@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - BlockMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">█ BlockMarket</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Marketplace</a>
+                <a href="/admin/logout" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Section -->
+    <section class="admin-section">
+        <div class="container">
+            <h1 class="admin-title">Admin Panel</h1>
+
+            <!-- Add New Listing Form -->
+            <div class="admin-card">
+                <h2>Add New Listing</h2>
+                <form id="addListingForm" class="admin-form" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" name="title" required placeholder="e.g., Modern Mansion">
+                        </div>
+                        <div class="form-group">
+                            <label for="builder_name">Builder Name</label>
+                            <input type="text" id="builder_name" name="builder_name" required placeholder="Your name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" required placeholder="Describe your amazing house..." rows="5"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="price">Price (Diamonds)</label>
+                            <input type="number" id="price" name="price" required placeholder="5000">
+                        </div>
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty</label>
+                            <select id="difficulty" name="difficulty">
+                                <option value="Easy">Easy</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location (Optional)</label>
+                        <input type="text" id="location" name="location" placeholder="Downtown, Forest Hills, etc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="style_tags">Style Tags (comma-separated)</label>
+                        <input type="text" id="style_tags" name="style_tags" placeholder="Modern, Contemporary, Luxurious">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Upload Image</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="image" name="image" accept="image/*" onchange="previewImage()">
+                            <label for="image" class="file-input-label">Choose Image (PNG, JPG, GIF)</label>
+                        </div>
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Add Listing</button>
+                </form>
+                <div id="addListingMessage" class="message"></div>
+            </div>
+
+            <!-- Listings Management Table -->
+            <div class="admin-card">
+                <h2>Manage Listings</h2>
+                <div id="listingsTable" class="listings-table">
+                    <!-- Listings will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Edit Listing</h2>
+            <form id="editListingForm" class="admin-form" enctype="multipart/form-data">
+                <input type="hidden" id="editListingId" name="id">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editTitle">Title</label>
+                        <input type="text" id="editTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBuilder">Builder Name</label>
+                        <input type="text" id="editBuilder" name="builder_name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <textarea id="editDescription" name="description" required rows="5"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPrice">Price (Diamonds)</label>
+                        <input type="number" id="editPrice" name="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDifficulty">Difficulty</label>
+                        <select id="editDifficulty" name="difficulty">
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editLocation">Location</label>
+                    <input type="text" id="editLocation" name="location" placeholder="Downtown, Forest Hills, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="editStyleTags">Style Tags</label>
+                    <input type="text" id="editStyleTags" name="style_tags" placeholder="Modern, Contemporary">
+                </div>
+
+                <div class="form-group">
+                    <label for="editImage">Update Image (optional)</label>
+                    <input type="file" id="editImage" name="image" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 BlockMarket - A Minecraft House Marketplace</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAdminListings();
+            document.getElementById('addListingForm').addEventListener('submit', addListing);
+            document.getElementById('editListingForm').addEventListener('submit', saveListing);
+        });
+    </script>
+</body>
+</html>

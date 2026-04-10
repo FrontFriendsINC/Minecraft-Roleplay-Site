@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockMarket - Minecraft Server Homes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">⛏️ BlockMarket</span>
+                <p class="tagline">Your Minecraft Server Home Marketplace</p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Find Your Dream Home</h1>
+            <p class="hero-subtitle">Browse beautiful houses built by talented builders</p>
+            <div class="hero-search">
+                <input type="text" id="searchInput" placeholder="Search for houses..." class="search-input">
+                <button onclick="searchListings()" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <h2>Filter by Preferences</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Price Range (Diamonds)</label>
+                    <input type="number" id="minPrice" placeholder="Min" class="filter-input" value="0">
+                    <input type="number" id="maxPrice" placeholder="Max" class="filter-input" value="100000">
+                </div>
+
+                <div class="filter-group">
+                    <label>Building Style</label>
+                    <select id="styleFilter" class="filter-input">
+                        <option value="">All Styles</option>
+                        <option value="Modern">Modern</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Medieval">Medieval</option>
+                        <option value="Contemporary">Contemporary</option>
+                        <option value="Futuristic">Futuristic</option>
+                        <option value="Underground">Underground</option>
+                        <option value="Nature">Nature</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Difficulty</label>
+                    <select id="difficultyFilter" class="filter-input">
+                        <option value="">All Levels</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+
+                <button onclick="applyFilters()" class="btn btn-secondary">Apply Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listings Grid -->
+    <section class="listings-section">
+        <div class="container">
+            <div id="listingsGrid" class="listings-grid">
+                <!-- Listings will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Listing Modal -->
+    <div id="listingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody" class="modal-body">
+                <!-- Listing details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 BlockMarket - Premium Minecraft Server Homes</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        // Load listings on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadListings();
+        });
+
+        // Hidden admin access: Ctrl+Shift+F12
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'F12') {
+                window.location.href = '/admin/login';
+            }
+        });
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchListings();
+            }
+        });
+    </script>
+</body>
+</html>
